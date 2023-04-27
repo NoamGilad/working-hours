@@ -5,12 +5,12 @@ import { useState } from "react";
 
 function App() {
   const [list, setList] = useState([]);
-  const addEntry = (date, from, to) => {
-    setList((prevValue) => [...prevValue, { date: date, from: from, to: to }]);
+  const addEntry = (data) => {
+    setList((prevValue) => [...prevValue, { data }]);
   };
   return (
     <div className="App">
-      <MainForm addEntry={addEntry} />
+      <MainForm addEntryMainForm={addEntry} />
       <div>
         {list.map((entry, index) => {
           console.log(entry);
@@ -19,6 +19,8 @@ function App() {
             <div key={index}>
               <label>{index + 1}. </label>
               <label>{entry.date}</label>
+              <label>{entry.from}</label>
+              <label>{entry.to}</label>
               {/* <label>{shiftHours}</label> */}
             </div>
           );
