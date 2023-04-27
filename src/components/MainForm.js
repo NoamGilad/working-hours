@@ -39,7 +39,7 @@ function MainFrom({ addEntryMainForm }) {
 
   return (
     <div>
-      <p>hkljh.kj</p>
+      <p>Workings hours</p>
       <form className="mainForm">
         <FormField label="date">
           <input
