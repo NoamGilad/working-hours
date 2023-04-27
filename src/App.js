@@ -6,7 +6,8 @@ import { useState } from "react";
 function App() {
   const [list, setList] = useState([]);
   const addEntry = (data) => {
-    setList((prevValue) => [...prevValue, { data }]);
+    ///// you had ... ,{ data }] like this, but it is already an object to you turned in into an object within an object
+    setList((prevValue) => [...prevValue, data]);
   };
   return (
     <div className="App">
