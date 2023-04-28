@@ -3,9 +3,9 @@ import Button from "./Button";
 import { useState } from "react";
 
 function MainFrom({ addEntryMainForm }) {
-  const [date, setDate] = useState();
-  const [from, setFrom] = useState();
-  const [to, setTo] = useState();
+  const [date, setDate] = useState('');
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
 
   const dateHandler = (e) => {
     setDate(e.target.value);
@@ -25,7 +25,7 @@ function MainFrom({ addEntryMainForm }) {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    // console.log(date, from ,to)
+    console.log(date, from ,to)
     if (!date || !from || !to) return;
     const obj = {
       date,
@@ -36,9 +36,9 @@ function MainFrom({ addEntryMainForm }) {
     //// also you named this object date which is already used here as a variable so better to give a dif name
     addEntryMainForm(obj);
 
-    setDate(undefined);
-    setFrom(undefined);
-    setTo(undefined);
+    setDate('');
+    setFrom('');
+    setTo('');
   };
 
   return (
