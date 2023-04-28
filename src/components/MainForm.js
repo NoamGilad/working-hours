@@ -1,16 +1,18 @@
+import { useState } from "react";
 import FormField from "./FormField";
 import Button from "./Button";
-import { useState } from "react";
+import ListEntry from "./ListEntry";
+import AmountPerHour from "./AmountPerHour";
 
 function MainFrom({ addEntryMainForm }) {
-  const [date, setDate] = useState('');
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
+  const [date, setDate] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [amount, setAmount] = useState("");
 
   const dateHandler = (e) => {
     setDate(e.target.value);
   };
-
   const fromHandler = (e) => {
     setFrom(e.target.value);
     // const [hours, minutes] = e.target.value.split(":");
@@ -18,38 +20,42 @@ function MainFrom({ addEntryMainForm }) {
 
     //   setFrom(new Date().setHours(hours).setMinutes(minutes))
   };
-
   const toHandler = (e) => {
     setTo(e.target.value);
   };
+  const amountHandler = (e) => {
+    setAmount(e.target.value);
+  };
 
   const submitHandler = (e) => {
-    e.preventDefault()
-    console.log(date, from ,to)
-    if (!date || !from || !to) return;
-    const obj = {
+    e.preventDefault();
+    console.log(date, from, to, amount);
+    if (!date || !from || !to || !amount) return;
+    const data = {
       date,
       from,
       to,
+      amount,
     };
     //// you wrote date: dateHandler, which is wrong, you wanna pass the date, not the function
-    //// also you named this object date which is already used here as a variable so better to give a dif name
-    addEntryMainForm(obj);
+    addEntryMainForm(data);
 
-    setDate('');
-    setFrom('');
-    setTo('');
+    setDate("");
+    setFrom("");
+    setTo("");
+    setAmount("");
   };
 
   return (
     <div>
       <p>Workings hours</p>
+      <AmountPerHour />
       <form className="mainForm">
         <FormField label="date">
           <input
             type="date"
             min="2019-01-01"
-            max="2022-12-31"
+            max={new Date()}
             value={date}
             onChange={dateHandler}
           />
@@ -59,6 +65,9 @@ function MainFrom({ addEntryMainForm }) {
         </FormField>
         <FormField label="to">
           <input type="time" value={to} onChange={toHandler} />
+        </FormField>
+        <FormField label="$ per hour">
+          <input type="amount" value={amount} onChange={amountHandler} />
         </FormField>
         <Button label="submit" handler={submitHandler} />
       </form>

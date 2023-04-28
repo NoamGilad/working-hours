@@ -8,6 +8,7 @@ function App() {
   const addEntry = (data) => {
     setList((prevValue) => [...prevValue, data]);
   };
+  const renderList = (index, date, from, to) => {};
   return (
     <div className="App">
       <MainForm addEntryMainForm={addEntry} />
@@ -18,9 +19,10 @@ function App() {
           return (
             <div key={index}>
               <label>{index + 1}. </label>
-              <label>{entry.date}</label>
-              <label>{entry.from}</label>
-              <label>{entry.to}</label>
+              <label>{entry.date} </label>
+              <label>from: {entry.from} </label>
+              <label>to: {entry.to} </label>
+              <label>for {entry.amount}$ per hour</label>
               {/* <label>{shiftHours}</label> */}
             </div>
           );
