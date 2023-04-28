@@ -24,17 +24,21 @@ function MainFrom({ addEntryMainForm }) {
   };
 
   const submitHandler = (e) => {
+    e.preventDefault()
+    // console.log(date, from ,to)
     if (!date || !from || !to) return;
-    const data = {
-      date: dateHandler,
-      from: fromHandler,
-      to: toHandler,
+    const obj = {
+      date,
+      from,
+      to,
     };
-    addEntryMainForm(data);
+    //// you wrote date: dateHandler, which is wrong, you wanna pass the date, not the function
+    //// also you named this object date which is already used here as a variable so better to give a dif name
+    addEntryMainForm(obj);
 
-    setDate();
-    setFrom();
-    setTo();
+    setDate(undefined);
+    setFrom(undefined);
+    setTo(undefined);
   };
 
   return (
