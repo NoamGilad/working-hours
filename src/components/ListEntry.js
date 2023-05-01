@@ -1,13 +1,17 @@
 function ListEntry(props) {
-  const { index, date, from, to, amount } = props;
+  const { shifts } = props;
 
   return (
-    <div key={index}>
-      <label>{index + 1}. </label>
-      <label>{date}</label>
-      <label>{from}</label>
-      <label>{to}</label>
-      {/* <label>{shiftHours}</label> */}
+    <div>
+      {shifts.map((listArr, index) => (
+        <div key={index}>
+          <label>{index + 1}. </label>
+          <label>{listArr.date} </label>
+          <label>from: {listArr.from} </label>
+          <label>to: {listArr.to} </label>
+          {/* <label>{shiftHours}</label> */}
+        </div>
+      ))}
     </div>
   );
 }

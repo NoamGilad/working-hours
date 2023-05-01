@@ -1,7 +1,6 @@
 import { useState } from "react";
 import FormField from "./FormField";
 import Button from "./Button";
-import ListEntry from "./ListEntry";
 import AmountPerHour from "./AmountPerHour";
 
 function MainFrom({ addEntryMainForm }) {
@@ -23,19 +22,15 @@ function MainFrom({ addEntryMainForm }) {
   const toHandler = (e) => {
     setTo(e.target.value);
   };
-  const amountHandler = (e) => {
-    setAmount(e.target.value);
-  };
 
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(date, from, to, amount);
-    if (!date || !from || !to || !amount) return;
+    if (!date || !from || !to) return;
     const data = {
       date,
       from,
       to,
-      amount,
     };
     //// you wrote date: dateHandler, which is wrong, you wanna pass the date, not the function
     addEntryMainForm(data);
@@ -65,9 +60,6 @@ function MainFrom({ addEntryMainForm }) {
         </FormField>
         <FormField label="to">
           <input type="time" value={to} onChange={toHandler} />
-        </FormField>
-        <FormField label="$ per hour">
-          <input type="amount" value={amount} onChange={amountHandler} />
         </FormField>
         <Button label="submit" handler={submitHandler} />
       </form>
