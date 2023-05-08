@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "./Button";
 
 function AmountPerHour(props) {
-  const {} = props;
+  const { amountPerHour } = props;
 
   const [amount, setAmount] = useState("");
   const amountHandler = (e) => {
@@ -11,7 +11,7 @@ function AmountPerHour(props) {
 
   const okHandler = (e) => {
     e.preventDefault();
-    console.log(`OK`);
+    console.log(amount);
   };
 
   return (

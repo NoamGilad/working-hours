@@ -1,3 +1,5 @@
+import AmountPerHour from "./AmountPerHour";
+
 function ListEntry(props) {
   const { shifts } = props;
 

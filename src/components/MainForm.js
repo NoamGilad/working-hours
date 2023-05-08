@@ -26,6 +26,11 @@ function MainFrom({ addEntryMainForm }) {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(date, from, to, amount);
+    const fromTime = new Date(`1970-01-01T${from}:00`);
+    const toTime = new Date(`1970-01-01T${to}:00`);
+    console.log(fromTime.getTime(), toTime.getTime());
+    const timeDiff = toTime - fromTime;
+    console.log(timeDiff);
     if (!date || !from || !to) return;
     const data = {
       date,
