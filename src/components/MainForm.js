@@ -2,6 +2,7 @@ import { useState } from "react";
 import FormField from "./FormField";
 import Button from "./Button";
 import AmountPerHour from "./AmountPerHour";
+import { Title } from "./ListEntry";
 
 function MainFrom({ addEntryMainForm }) {
   const [date, setDate] = useState("");

@@ -1,4 +1,12 @@
 import AmountPerHour from "./AmountPerHour";
+import styled from "styled-components";
+
+const Title = styled.label`
+  font-size: ${(p) => p.frontSize};
+  text-align: center;
+  color: ${(p) => p.color};
+  background-color: brown;
+`;
 
 function ListEntry(props) {
   const { shifts } = props;
@@ -7,10 +15,12 @@ function ListEntry(props) {
     <div>
       {shifts.map((listArr, index) => (
         <div key={index}>
-          <label>{index + 1}. </label>
-          <label>{listArr.date} </label>
-          <label>from: {listArr.from} </label>
-          <label>to: {listArr.to} </label>
+          <Title color="white" frontSize="2.5rem">
+            {index + 1}.{" "}
+          </Title>
+          <Title frontSize="2rem">{listArr.date} </Title>
+          <Title>from: {listArr.from} </Title>
+          <Title>to: {listArr.to} </Title>
           {/* <label>{shiftHours}</label> */}
         </div>
       ))}
@@ -19,3 +29,4 @@ function ListEntry(props) {
 }
 
 export default ListEntry;
+export { Title as Title };

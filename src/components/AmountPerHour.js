@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "./Button";
 
 function AmountPerHour(props) {
-  const { amountPerHour } = props;
+  const { perHour } = props;
 
   const [amount, setAmount] = useState("");
   const amountHandler = (e) => {
