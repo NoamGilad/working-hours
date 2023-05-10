@@ -5,13 +5,14 @@ import AmountPerHour from "./AmountPerHour";
 import { Title } from "./ListEntry";
 
 function MainFrom({ addEntryMainForm }) {
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date());
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [amount, setAmount] = useState("");
 
   const dateHandler = (e) => {
-    setDate(e.target.value);
+    console.log(date);
+    setDate(new Date(e.target.value));
   };
   const fromHandler = (e) => {
     setFrom(e.target.value);
@@ -27,17 +28,32 @@ function MainFrom({ addEntryMainForm }) {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(date, from, to, amount);
-    const fromTime = new Date(`1970-01-01T${from}:00`);
-    const toTime = new Date(`1970-01-01T${to}:00`);
-    console.log(fromTime.getTime(), toTime.getTime());
-    const timeDiff = toTime - fromTime;
-    console.log(timeDiff);
+    const fromTime = new Date(`${date}T${from}`);
+    const toTime = new Date(`${date}T${to}`);
+    const diffInMs = toTime.getTime() - fromTime.getTime();
+    const diffInMins = Math.round(diffInMs / 1000 / 60);
+    const timeDiffDecimal = diffInMins / 60;
+    const hours = Math.floor(timeDiffDecimal);
+    const minutes = Math.floor((timeDiffDecimal - hours) * 60);
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    const formattedTime = date.toLocaleTimeString("en-US", {
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    console.log(formattedTime);
+
     if (!date || !from || !to) return;
-    const data = {
-      date,
-      from,
-      to,
-    };
+    const data = [
+      {
+        date,
+        from,
+        to,
+        shiftHours: formattedTime,
+      },
+    ];
+    console.log(data);
     //// you wrote date: dateHandler, which is wrong, you wanna pass the date, not the function
     addEntryMainForm(data);
 
