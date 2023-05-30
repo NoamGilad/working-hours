@@ -1,23 +1,28 @@
+import { useState, Fragment } from "react";
+
 import logo from "./logo.svg";
 import "./App.css";
 import MainForm from "./components/MainForm";
-import { useState } from "react";
-import ListEntry from "./components/ListEntry";
+import ShiftList from "./components/ShiftsList";
 
-function App() {
+const App = (props) => {
   const [list, setList] = useState([]);
-  const addEntry = (data) => {
-    setList((prevValue) => [...prevValue, data]);
+
+  const addEntryHandler = (date, from, to) => {
+    setList((prevShiftsList) => {
+      return [
+        ...prevShiftsList,
+        { date, from, to, id: Math.random().toString() },
+      ];
+    });
   };
 
   return (
-    <div className="App">
-      <MainForm addEntryMainForm={addEntry} />
-      <div>
-        <ListEntry shifts={list} />
-      </div>
-    </div>
+    <Fragment className="App">
+      <MainForm addEntryMainForm={addEntryHandler} />
+      <ShiftList shifts={list} />
+    </Fragment>
   );
-}
+};
 
 export default App;

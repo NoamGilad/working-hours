@@ -1,11 +1,11 @@
-function FormField(props) {
+const FormField = (props) => {
   const { children, label } = props;
   return (
-    <div>
+    <form>
       <p>{label}</p>
       {children}
-    </div>
+    </form>
   );
-}
+};
 
 export default FormField;

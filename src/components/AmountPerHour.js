@@ -11,7 +11,7 @@ function AmountPerHour(props) {
 
   const okHandler = (e) => {
     e.preventDefault();
-    console.log(amount);
+    console.log(amount, 123);
   };
 
   return (

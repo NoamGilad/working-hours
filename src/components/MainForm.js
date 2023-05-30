@@ -1,19 +1,18 @@
-import { useState } from "react";
-import FormField from "./FormField";
-import Button from "./Button";
-import AmountPerHour from "./AmountPerHour";
-import { Title } from "./ListEntry";
+import { useState, Fragment } from "react";
 
-function MainFrom({ addEntryMainForm }) {
-  const [date, setDate] = useState(new Date());
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
-  const [amount, setAmount] = useState("");
+import FormField from "./FormField";
+import Button from "./UI/Button";
+import Card from "./UI/Card";
+
+const MainForm = (props) => {
+  const [date, setDate] = useState(``);
+  const [from, setFrom] = useState(``);
+  const [to, setTo] = useState(``);
 
   const dateHandler = (e) => {
-    console.log(date);
-    setDate(new Date(e.target.value));
+    setDate(e.target.value);
   };
+
   const fromHandler = (e) => {
     setFrom(e.target.value);
     // const [hours, minutes] = e.target.value.split(":");
@@ -21,72 +20,56 @@ function MainFrom({ addEntryMainForm }) {
 
     //   setFrom(new Date().setHours(hours).setMinutes(minutes))
   };
+
   const toHandler = (e) => {
     setTo(e.target.value);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(date, from, to, amount);
-    const fromTime = new Date(`${date}T${from}`);
-    const toTime = new Date(`${date}T${to}`);
-    const diffInMs = toTime.getTime() - fromTime.getTime();
-    const diffInMins = Math.round(diffInMs / 1000 / 60);
-    const timeDiffDecimal = diffInMins / 60;
-    const hours = Math.floor(timeDiffDecimal);
-    const minutes = Math.floor((timeDiffDecimal - hours) * 60);
-    date.setHours(hours);
-    date.setMinutes(minutes);
-    const formattedTime = date.toLocaleTimeString("en-US", {
-      hour12: false,
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    console.log(formattedTime, 123);
-
     if (!date || !from || !to) return;
-    const data = [
-      {
-        date,
-        from,
-        to,
-        shiftHours: formattedTime,
-      },
-    ];
-    console.log(data);
-    //// you wrote date: dateHandler, which is wrong, you wanna pass the date, not the function
-    addEntryMainForm(data);
+    const shift = {
+      date: dateHandler,
+      from: fromHandler,
+      to: toHandler,
+    };
+    props.addEntryMainForm(date, from, to);
 
-    setDate("");
-    setFrom("");
-    setTo("");
-    setAmount("");
+    setDate(``);
+    setFrom(``);
+    setTo(``);
   };
 
   return (
-    <div>
-      <p>Workings hours</p>
-      <AmountPerHour />
-      <form className="mainForm">
-        <FormField label="date">
-          <input
-            type="date"
-            min="2019-01-01"
-            max={new Date()}
-            value={date}
-            onChange={dateHandler}
-          />
+    <Fragment>
+      <header>
+        <h1>Workings hours</h1>
+      </header>
+      <Card>
+        <FormField label="Amount per hour">
+          <input type="amount" />
         </FormField>
-        <FormField label="from">
-          <input type="time" value={from} onChange={fromHandler} />
-        </FormField>
-        <FormField label="to">
-          <input type="time" value={to} onChange={toHandler} />
-        </FormField>
-        <Button label="submit" handler={submitHandler} />
-      </form>
-    </div>
+        <form className="mainForm">
+          <FormField label="date">
+            <input
+              type="date"
+              min="2019-01-01"
+              max=""
+              value={date}
+              onChange={dateHandler}
+            />
+          </FormField>
+          <FormField label="from">
+            <input type="time" value={from} onChange={fromHandler} />
+          </FormField>
+          <FormField label="to">
+            <input type="time" value={to} onChange={toHandler} />
+          </FormField>
+          <Button onClick={submitHandler}>Add shift</Button>
+        </form>
+      </Card>
+    </Fragment>
   );
-}
+};
 
-export default MainFrom;
+export default MainForm;
