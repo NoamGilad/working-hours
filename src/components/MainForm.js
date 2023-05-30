@@ -42,7 +42,7 @@ function MainFrom({ addEntryMainForm }) {
       hour: "2-digit",
       minute: "2-digit",
     });
-    console.log(formattedTime);
+    console.log(formattedTime, 123);
 
     if (!date || !from || !to) return;
     const data = [
