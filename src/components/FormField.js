@@ -1,5 +1,6 @@
 const FormField = (props) => {
-  const { children, label, className } = props;
+  const { children, label } = props;
+
   return (
     <form>
       <p>{label}</p>

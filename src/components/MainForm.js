@@ -39,13 +39,6 @@ const MainForm = (props) => {
         message: "Please fill all your shift's details.",
       });
     }
-
-    if (amount <= 0) {
-      return setError({
-        title: "Invalid amount",
-        message: "You can not earn 0 or less $ per hour.",
-      });
-    }
     props.addEntryMainForm(date, from, to, amount);
 
     setDate(``);
