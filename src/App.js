@@ -18,7 +18,7 @@ const App = (props) => {
   };
 
   return (
-    <Fragment className="App">
+    <Fragment>
       <MainForm addEntryMainForm={addEntryHandler} />
       <ShiftList shifts={list} />
     </Fragment>

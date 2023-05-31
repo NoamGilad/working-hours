@@ -1,13 +1,16 @@
 import { useState, Fragment } from "react";
 
+import classes from "./MainForm.module.css";
 import FormField from "./FormField";
 import Button from "./UI/Button";
 import Card from "./UI/Card";
+import ErrorModal from "./UI/ErrorModal";
 
 const MainForm = (props) => {
   const [date, setDate] = useState(``);
   const [from, setFrom] = useState(``);
   const [to, setTo] = useState(``);
+  const [error, setError] = useState();
 
   const dateHandler = (e) => {
     setDate(e.target.value);
@@ -27,7 +30,13 @@ const MainForm = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!date || !from || !to) return;
+
+    if (!date || !from || !to) {
+      return setError({
+        title: "Invalid inputs",
+        message: "Please fill all your shift's details.",
+      });
+    }
     props.addEntryMainForm(date, from, to);
 
     setDate(``);
@@ -35,16 +44,27 @@ const MainForm = (props) => {
     setTo(``);
   };
 
+  const errorHandler = () => {
+    setError(null);
+  };
+
   return (
     <Fragment>
-      <header>
+      <header className={classes.header}>
         <h1>Workings hours</h1>
       </header>
-      <Card>
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirm={errorHandler}
+        />
+      )}
+      <Card className={classes.card}>
         <FormField label="Amount per hour">
           <input type="amount" />
         </FormField>
-        <form className="mainForm">
+        <div className={classes.input}>
           <FormField label="date">
             <input
               type="date"
@@ -61,7 +81,7 @@ const MainForm = (props) => {
             <input type="time" value={to} onChange={toHandler} />
           </FormField>
           <Button onClick={submitHandler}>Add shift</Button>
-        </form>
+        </div>
       </Card>
     </Fragment>
   );
