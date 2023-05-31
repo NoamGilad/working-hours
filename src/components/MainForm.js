@@ -28,11 +28,6 @@ const MainForm = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (!date || !from || !to) return;
-    const shift = {
-      date: dateHandler,
-      from: fromHandler,
-      to: toHandler,
-    };
     props.addEntryMainForm(date, from, to);
 
     setDate(``);
