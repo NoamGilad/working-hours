@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "./Button";
+import Button from "./UI/Button";
 
 function AmountPerHour(props) {
   const { perHour } = props;
@@ -25,7 +25,9 @@ function AmountPerHour(props) {
           onChange={amountHandler}
         ></input>
       </form>
-      <Button label="OK" handler={okHandler}></Button>
+      <Button label="OK" handler={okHandler}>
+        OK
+      </Button>
     </div>
   );
 }

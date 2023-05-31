@@ -7,19 +7,27 @@ import ShiftList from "./components/ShiftsList";
 
 const App = (props) => {
   const [list, setList] = useState([]);
+  const [amount, setAmount] = useState(``);
 
-  const addEntryHandler = (date, from, to) => {
+  const addEntryHandler = (date, from, to, amount) => {
     setList((prevShiftsList) => {
       return [
         ...prevShiftsList,
-        { date, from, to, id: Math.random().toString() },
+        { date, from, to, amount, id: Math.random().toString() },
       ];
     });
   };
 
+  const addAmountHandler = (amountPerHour) => {
+    setAmount(amountPerHour);
+  };
+
   return (
     <Fragment>
-      <MainForm addEntryMainForm={addEntryHandler} />
+      <MainForm
+        addEntryMainForm={addEntryHandler}
+        addAmountMainForm={addAmountHandler}
+      />
       <ShiftList shifts={list} />
     </Fragment>
   );

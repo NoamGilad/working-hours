@@ -7,7 +7,8 @@ const ShiftList = (props) => {
       <ul>
         {props.shifts.map((shift) => (
           <li key={shift.id}>
-            {shift.date} {shift.from} {shift.to}
+            Date: {shift.date} From: {shift.from} To: {shift.to} For{" "}
+            {shift.amount}₪ per hour
           </li>
         ))}
       </ul>

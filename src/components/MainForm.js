@@ -5,11 +5,13 @@ import FormField from "./FormField";
 import Button from "./UI/Button";
 import Card from "./UI/Card";
 import ErrorModal from "./UI/ErrorModal";
+import Salary from "./Salary";
 
 const MainForm = (props) => {
   const [date, setDate] = useState(``);
   const [from, setFrom] = useState(``);
   const [to, setTo] = useState(``);
+  const [amount, setAmount] = useState(``);
   const [error, setError] = useState();
 
   const dateHandler = (e) => {
@@ -31,17 +33,28 @@ const MainForm = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if (!date || !from || !to) {
+    if (!date || !from || !to || !amount) {
       return setError({
         title: "Invalid inputs",
         message: "Please fill all your shift's details.",
       });
     }
-    props.addEntryMainForm(date, from, to);
+
+    if (amount <= 0) {
+      return setError({
+        title: "Invalid amount",
+        message: "You can not earn 0 or less $ per hour.",
+      });
+    }
+    props.addEntryMainForm(date, from, to, amount);
 
     setDate(``);
     setFrom(``);
     setTo(``);
+  };
+
+  const amountHandler = (e) => {
+    setAmount(e.target.value);
   };
 
   const errorHandler = () => {
@@ -62,8 +75,16 @@ const MainForm = (props) => {
       )}
       <Card className={classes.card}>
         <FormField label="Amount per hour">
-          <input type="amount" />
+          <input
+            type="number"
+            value={amount}
+            min="0"
+            onChange={amountHandler}
+          />
         </FormField>
+        <label>{amount}₪</label>
+      </Card>
+      <Card className={classes.card}>
         <div className={classes.input}>
           <FormField label="date">
             <input
