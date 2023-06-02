@@ -13,6 +13,18 @@ const MainForm = (props) => {
   const [to, setTo] = useState(``);
   const [amount, setAmount] = useState(``);
   const [error, setError] = useState();
+  const [totalShift, setTotalShift] = useState(``);
+
+  // const totalShiftHandler = (from, to) => {
+  //   const timeDiffMs = to - from;
+  //   const timeDiffMin = timeDiffMs / 60000;
+  //   const timeDiffDecimal = timeDiffMin / 60;
+  //   const hours = Math.floor(timeDiffDecimal);
+  //   const minutes = Math.floor((timeDiffDecimal - hours) * 60);
+  //   const date = new Date();
+  //   date.setHours(hours, minutes);
+  //   setTotalShift(date);
+  // };
 
   const dateHandler = (e) => {
     setDate(e.target.value);
@@ -40,6 +52,16 @@ const MainForm = (props) => {
       });
     }
     props.addEntryMainForm(date, from, to, amount);
+
+    const toMinDecimal = to.split(":").pop();
+    const toDecimal = `${to.split(":").shift()}.${to.split(":").pop() / 60}`;
+
+    // const hours = Math.floor(timeDiffDecimal);
+    // const minutes = Math.floor((timeDiffDecimal - hours) * 60);
+    // const shiftDate = new Date();
+    // const currentShift = shiftDate.setHours(hours, minutes);
+    // setTotalShift(currentShift);
+    console.log(toDecimal);
 
     setDate(``);
     setFrom(``);
