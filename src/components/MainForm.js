@@ -5,7 +5,6 @@ import FormField from "./FormField";
 import Button from "./UI/Button";
 import Card from "./UI/Card";
 import ErrorModal from "./UI/ErrorModal";
-import Salary from "./Salary";
 
 const MainForm = (props) => {
   const [date, setDate] = useState(``);
@@ -53,15 +52,16 @@ const MainForm = (props) => {
     }
     props.addEntryMainForm(date, from, to, amount);
 
-    const toMinDecimal = to.split(":").pop();
-    const toDecimal = `${to.split(":").shift()}.${to.split(":").pop() / 60}`;
+    const fromDecimal = +from.split(":").shift() + +from.split(":").pop() / 60;
+    const toDecimal = +to.split(":").shift() + +to.split(":").pop() / 60;
+    const shiftTime = toDecimal - fromDecimal;
 
     // const hours = Math.floor(timeDiffDecimal);
     // const minutes = Math.floor((timeDiffDecimal - hours) * 60);
     // const shiftDate = new Date();
     // const currentShift = shiftDate.setHours(hours, minutes);
     // setTotalShift(currentShift);
-    console.log(toDecimal);
+    console.log(shiftTime);
 
     setDate(``);
     setFrom(``);
@@ -78,9 +78,6 @@ const MainForm = (props) => {
 
   return (
     <Fragment>
-      <header className={classes.header}>
-        <h1>Workings hours</h1>
-      </header>
       {error && (
         <ErrorModal
           title={error.title}

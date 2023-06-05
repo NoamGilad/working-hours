@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "./UI/Button";
+import Button from "../UI/Button";
 
 function AmountPerHour(props) {
   const { perHour } = props;
