@@ -50,18 +50,12 @@ const MainForm = (props) => {
         message: "Please fill all your shift's details.",
       });
     }
-    props.addEntryMainForm(date, from, to, amount);
 
     const fromDecimal = +from.split(":").shift() + +from.split(":").pop() / 60;
     const toDecimal = +to.split(":").shift() + +to.split(":").pop() / 60;
-    const shiftTime = toDecimal - fromDecimal;
+    const shiftTime = (toDecimal - fromDecimal).toFixed(2);
 
-    // const hours = Math.floor(timeDiffDecimal);
-    // const minutes = Math.floor((timeDiffDecimal - hours) * 60);
-    // const shiftDate = new Date();
-    // const currentShift = shiftDate.setHours(hours, minutes);
-    // setTotalShift(currentShift);
-    console.log(shiftTime);
+    props.addEntryMainForm(date, from, to, amount, shiftTime);
 
     setDate(``);
     setFrom(``);

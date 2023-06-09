@@ -6,6 +6,7 @@ import MainForm from "./components/MainForm";
 import ShiftList from "./components/ShiftsList";
 import Login from "./components/Login/Login";
 import MainHeader from "./components/UI/MainHeader";
+import AuthContext from "./store/auth-context";
 
 const App = (props) => {
   const [list, setList] = useState([]);
@@ -30,11 +31,11 @@ const App = (props) => {
     setIsLoggedIn(false);
   };
 
-  const addEntryHandler = (date, from, to, amount) => {
+  const addEntryHandler = (date, from, to, amount, shiftTime) => {
     setList((prevShiftsList) => {
       return [
         ...prevShiftsList,
-        { date, from, to, amount, id: Math.random().toString() },
+        { date, from, to, amount, shiftTime, id: Math.random().toString() },
       ];
     });
   };
@@ -44,16 +45,21 @@ const App = (props) => {
   };
 
   return (
-    <Fragment>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: isLoggedIn,
+        onLogout: logoutHandler,
+      }}
+    >
       {!isLoggedIn && (
         <Fragment>
-          <MainHeader isAutenticated={isLoggedIn} onLogout={logoutHandler} />
+          <MainHeader onLogout={logoutHandler} />
           <Login onLogin={loginHandler} />
         </Fragment>
       )}
       {isLoggedIn && (
         <Fragment>
-          <MainHeader isAutenticated={isLoggedIn} onLogout={logoutHandler} />
+          <MainHeader onLogout={logoutHandler} />
           <MainForm
             addEntryMainForm={addEntryHandler}
             addAmountMainForm={addAmountHandler}
@@ -61,7 +67,7 @@ const App = (props) => {
           <ShiftList shifts={list} />
         </Fragment>
       )}
-    </Fragment>
+    </AuthContext.Provider>
   );
 };
 
