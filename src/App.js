@@ -30,15 +30,10 @@ const App = (props) => {
 
   return (
     <Fragment>
-      {!AuthCtx.isLoggedIn && (
-        <Fragment>
-          <MainHeader onLogout={AuthCtx.logoutHandler} />
-          <Login onLogin={AuthCtx.loginHandler} />
-        </Fragment>
-      )}
+      <MainHeader onLogout={AuthCtx.logoutHandler} />
+      {!AuthCtx.isLoggedIn && <Login onLogin={AuthCtx.loginHandler} />}
       {AuthCtx.isLoggedIn && (
         <Fragment>
-          <MainHeader onLogout={AuthCtx.logoutHandler} />
           <MainForm
             addEntryMainForm={addEntryHandler}
             addAmountMainForm={addAmountHandler}
