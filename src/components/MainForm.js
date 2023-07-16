@@ -1,11 +1,29 @@
-import FormField from "./FormField";
-import Button from "./Button";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 
-function MainFrom({ addEntryMainForm }) {
-  const [date, setDate] = useState('');
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
+import classes from "./MainForm.module.css";
+import FormField from "./FormField";
+import Button from "./UI/Button";
+import Card from "./UI/Card";
+import ErrorModal from "./UI/ErrorModal";
+
+const MainForm = (props) => {
+  const [date, setDate] = useState(``);
+  const [from, setFrom] = useState(``);
+  const [to, setTo] = useState(``);
+  const [amount, setAmount] = useState(``);
+  const [error, setError] = useState();
+  const [totalShift, setTotalShift] = useState(``);
+
+  // const totalShiftHandler = (from, to) => {
+  //   const timeDiffMs = to - from;
+  //   const timeDiffMin = timeDiffMs / 60000;
+  //   const timeDiffDecimal = timeDiffMin / 60;
+  //   const hours = Math.floor(timeDiffDecimal);
+  //   const minutes = Math.floor((timeDiffDecimal - hours) * 60);
+  //   const date = new Date();
+  //   date.setHours(hours, minutes);
+  //   setTotalShift(date);
+  // };
 
   const dateHandler = (e) => {
     setDate(e.target.value);
@@ -24,46 +42,76 @@ function MainFrom({ addEntryMainForm }) {
   };
 
   const submitHandler = (e) => {
-    e.preventDefault()
-    console.log(date, from ,to)
-    if (!date || !from || !to) return;
-    const obj = {
-      date,
-      from,
-      to,
-    };
-    //// you wrote date: dateHandler, which is wrong, you wanna pass the date, not the function
-    //// also you named this object date which is already used here as a variable so better to give a dif name
-    addEntryMainForm(obj);
+    e.preventDefault();
 
-    setDate('');
-    setFrom('');
-    setTo('');
+    if (!date || !from || !to || !amount) {
+      return setError({
+        title: "Invalid inputs",
+        message: "Please fill all your shift's details.",
+      });
+    }
+
+    const fromDecimal = +from.split(":").shift() + +from.split(":").pop() / 60;
+    const toDecimal = +to.split(":").shift() + +to.split(":").pop() / 60;
+    const shiftTime = (toDecimal - fromDecimal).toFixed(2);
+
+    props.addEntryMainForm(date, from, to, amount, shiftTime);
+
+    setDate(``);
+    setFrom(``);
+    setTo(``);
+  };
+
+  const amountHandler = (e) => {
+    setAmount(e.target.value);
+  };
+
+  const errorHandler = () => {
+    setError(null);
   };
 
   return (
-    <div>
-      <p>Workings hours</p>
-      <form className="mainForm">
-        <FormField label="date">
+    <Fragment>
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirm={errorHandler}
+        />
+      )}
+      <Card className={classes.card}>
+        <FormField label="Amount per hour">
           <input
-            type="date"
-            min="2019-01-01"
-            max="2022-12-31"
-            value={date}
-            onChange={dateHandler}
+            type="number"
+            value={amount}
+            min="0"
+            onChange={amountHandler}
           />
         </FormField>
-        <FormField label="from">
-          <input type="time" value={from} onChange={fromHandler} />
-        </FormField>
-        <FormField label="to">
-          <input type="time" value={to} onChange={toHandler} />
-        </FormField>
-        <Button label="submit" handler={submitHandler} />
-      </form>
-    </div>
+        <label>{amount}₪</label>
+      </Card>
+      <Card className={classes.card}>
+        <div className={classes.input}>
+          <FormField label="date">
+            <input
+              type="date"
+              min="2019-01-01"
+              max=""
+              value={date}
+              onChange={dateHandler}
+            />
+          </FormField>
+          <FormField label="from">
+            <input type="time" value={from} onChange={fromHandler} />
+          </FormField>
+          <FormField label="to">
+            <input type="time" value={to} onChange={toHandler} />
+          </FormField>
+          <Button onClick={submitHandler}>Add shift</Button>
+        </div>
+      </Card>
+    </Fragment>
   );
-}
+};
 
-export default MainFrom;
+export default MainForm;
